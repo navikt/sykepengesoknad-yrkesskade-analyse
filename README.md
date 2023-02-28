@@ -1,0 +1,1 @@
+# sykepengesoknad-yrkesskade-analyse
