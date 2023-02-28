@@ -1,0 +1,62 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sykepengesoknad-yrkesskade-analyse
+  namespace: flex
+  labels:
+    team: flex
+spec:
+  image: {{image}}
+  replicas:
+    min: {{replicas_min}}
+    max: {{replicas_max}}
+    cpuThresholdPercentage: 90
+  port: 8080
+  liveness:
+    path: /internal/health
+    initialDelay: 60
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 20
+  readiness:
+    path: /internal/health
+    initialDelay: 60
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 20
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  resources:
+    limits:
+      cpu: 600m
+      memory: 600Mi
+    requests:
+      cpu: 400m
+      memory: 500Mi
+  azure:
+    application:
+      enabled: true
+      tenant: {{azureTenant}}
+  kafka:
+    pool: {{kafkaPool}}
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_14
+        tier: {{db_tier}}
+        diskType: SSD
+        highAvailability: true
+        diskSize: {{db_diskSize}}
+        pointInTimeRecovery: false
+        diskAutoresize: true
+        databases:
+          - name: sykepengesoknad-yrkesskade-analyse-db
+            envVarPrefix: DATABASE
+        maintenance:
+          day: 2
+          hour: 2
+  env:
+  {{#each env}}
+     - name: {{@key}}
+       value: {{this}}
+  {{/each}}
