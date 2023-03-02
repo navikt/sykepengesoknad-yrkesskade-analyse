@@ -55,6 +55,11 @@ spec:
         maintenance:
           day: 2
           hour: 2
+  accessPolicy:
+    outbound:
+      rules:
+        - application: yrkesskade-saker
+          namespace: yrkesskade
   env:
   {{#each env}}
      - name: {{@key}}
