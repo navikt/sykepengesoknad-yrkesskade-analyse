@@ -35,7 +35,7 @@ class SjekkYrkesskade {
             return digest.fold("") { str, it -> str + "%02x".format(it) }
         }
 
-        val harYsSakerResponse = yrkesskadeClient.hentYrkesskade(HarYsSakerRequest(listOf(soknad.fnr), null))
+        val harYsSakerResponse = yrkesskadeClient.hentYrkesskade(HarYsSakerRequest(listOf(soknad.fnr), null)) ?: return
         sykepengesoknadYrkesskadeStatusRepo.save(
             SykepengesoknadYrkesskadeStatus(
                 id = null,
