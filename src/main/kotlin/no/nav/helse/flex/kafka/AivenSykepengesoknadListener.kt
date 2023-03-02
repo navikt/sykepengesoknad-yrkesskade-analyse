@@ -3,7 +3,6 @@ package no.nav.helse.flex.kafka
 import no.nav.helse.flex.yrkesskadeanalyse.SjekkYrkesskade
 import no.nav.helse.flex.yrkesskadeanalyse.tilEnkelSykepengesoknad
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.springframework.context.annotation.Profile
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Component
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component
 const val SYKEPENGESOKNAD_TOPIC = "flex." + "sykepengesoknad"
 
 @Component
-@Profile("test")
 class AivenSykepengesoknadListener(
     private val sjekkYrkesskade: SjekkYrkesskade
 ) {

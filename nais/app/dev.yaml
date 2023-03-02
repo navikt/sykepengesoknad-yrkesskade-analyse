@@ -6,6 +6,6 @@ replicas_max: 1
 db_tier: db-f1-micro
 db_diskSize: 10
 env:
-  SPRING_PROFILES_ACTIVE: default,test
+  SPRING_PROFILES_ACTIVE: default
   YRKESSKADE_URL: http://yrkesskade-saker.yrkesskade
   YRKESSKADE_AAD_CLIENT_ID: dev-gcp.yrkesskade.yrkesskade-saker
