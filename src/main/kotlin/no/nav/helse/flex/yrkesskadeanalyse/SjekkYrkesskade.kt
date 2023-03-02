@@ -2,13 +2,17 @@ package no.nav.helse.flex.yrkesskadeanalyse
 
 import no.nav.helse.flex.client.yrkesskade.HarYsSakerRequest
 import no.nav.helse.flex.client.yrkesskade.YrkesskadeClient
+import no.nav.helse.flex.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.lang.Exception
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Component
 class SjekkYrkesskade {
+
+    val log = logger()
 
     @Autowired
     lateinit var yrkesskadeClient: YrkesskadeClient
@@ -36,13 +40,17 @@ class SjekkYrkesskade {
         }
 
         val harYsSakerResponse = yrkesskadeClient.hentYrkesskade(HarYsSakerRequest(listOf(soknad.fnr), null)) ?: return
-        sykepengesoknadYrkesskadeStatusRepo.save(
-            SykepengesoknadYrkesskadeStatus(
-                id = null,
-                sykepengesoknadUuidHash = soknad.id.toSha256(),
-                sendt = sendtDatotid,
-                yrkesskadeStatus = harYsSakerResponse.harYrkesskadeEllerYrkessykdom.name
+        try {
+            sykepengesoknadYrkesskadeStatusRepo.save(
+                SykepengesoknadYrkesskadeStatus(
+                    id = null,
+                    sykepengesoknadUuidHash = soknad.id.toSha256(),
+                    sendt = sendtDatotid,
+                    yrkesskadeStatus = harYsSakerResponse.harYrkesskadeEllerYrkessykdom.name
+                )
             )
-        )
+        } catch (e: Exception) {
+            log.error("Kunne ikke lagre yrkesskade status for søknad ${soknad.id}", e)
+        }
     }
 }
