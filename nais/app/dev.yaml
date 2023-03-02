@@ -7,5 +7,5 @@ db_tier: db-f1-micro
 db_diskSize: 10
 env:
   SPRING_PROFILES_ACTIVE: default,test
-  YRKESSKADE_URL: https://yrkesskade-saker.dev.intern.nav.no
+  YRKESSKADE_URL: http://yrkesskade-saker.yrkesskade
   YRKESSKADE_AAD_CLIENT_ID: dev-gcp.yrkesskade.yrkesskade-saker
