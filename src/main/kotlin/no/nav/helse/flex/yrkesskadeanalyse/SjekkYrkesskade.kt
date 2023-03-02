@@ -50,7 +50,7 @@ class SjekkYrkesskade {
                 )
             )
         } catch (e: Exception) {
-            log.error("Kunne ikke lagre yrkesskade status for søknad ${soknad.id}", e)
+            log.warn("Kunne ikke lagre yrkesskade status for søknad ${soknad.id}", e)
         }
     }
 }
