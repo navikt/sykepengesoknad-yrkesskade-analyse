@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 @Repository
-interface SendtSoknadRepository : CrudRepository<SendtSoknad, String>
+interface SykepengesoknadYrkesskadeStatusRepo : CrudRepository<SykepengesoknadYrkesskadeStatus, String>
 
-data class SendtSoknad(
+data class SykepengesoknadYrkesskadeStatus(
     @Id
     val id: String? = null,
     val sykepengesoknadUuidHash: String,

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 const val SYKEPENGESOKNAD_TOPIC = "flex." + "sykepengesoknad"
 
 @Component
-@Profile("lessoknader")
+@Profile("test")
 class AivenSykepengesoknadListener(
     private val sjekkYrkesskade: SjekkYrkesskade
 ) {
