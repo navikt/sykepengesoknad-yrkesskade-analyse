@@ -1,5 +1,6 @@
 package no.nav.helse.flex
 
+import okhttp3.mockwebserver.MockWebServer
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,12 +30,13 @@ abstract class FellesTestOppsett {
     lateinit var kafkaProducer: KafkaProducer<String, String>
 
     companion object {
+        private val yrkesskadeMockWebserver: MockWebServer
 
         init {
             val threads = mutableListOf<Thread>()
 
             thread {
-                KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.0.1")).apply {
+                KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.3.2")).apply {
                     start()
                     System.setProperty("KAFKA_BROKERS", bootstrapServers)
                 }
@@ -49,6 +51,10 @@ abstract class FellesTestOppsett {
                 }
             }.also { threads.add(it) }
 
+            yrkesskadeMockWebserver = MockWebServer().apply {
+                System.setProperty("YRKESSKADE_URL", "http://localhost:$port")
+                dispatcher = YrkesskadeMockDispatcher
+            }
             threads.forEach { it.join() }
         }
     }

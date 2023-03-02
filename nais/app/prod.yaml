@@ -7,3 +7,5 @@ db_tier: db-custom-1-3840
 db_diskSize: 10
 env:
   SPRING_PROFILES_ACTIVE: default
+  YRKESSKADE_URL: http://yrkesskade-saker.yrkesskade
+  YRKESSKADE_AAD_CLIENT_ID: prod-gcp.yrkesskade.yrkesskade-saker

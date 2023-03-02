@@ -20,14 +20,20 @@ val githubPassword: String by project
 
 repositories {
     mavenCentral()
+
     maven {
         url = uri("https://maven.pkg.github.com/navikt/maven-release")
+        credentials {
+            username = githubUser
+            password = githubPassword
+        }
     }
 }
 
 val testContainersVersion = "1.17.6"
 val logstashLogbackEncoderVersion = "7.3"
 val kluentVersion = "1.72"
+val tokenSupportVersion = "3.0.3"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
@@ -43,6 +49,8 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
     implementation("org.hibernate.validator:hibernate-validator")
+    implementation("no.nav.security:token-client-spring:$tokenSupportVersion")
+    implementation("no.nav.security:token-validation-spring:$tokenSupportVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
@@ -53,6 +61,7 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:$testContainersVersion")
     testImplementation("org.awaitility:awaitility")
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
+    testImplementation("no.nav.security:token-validation-spring-test:$tokenSupportVersion")
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
